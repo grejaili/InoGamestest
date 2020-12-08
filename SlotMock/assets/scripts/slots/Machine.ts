@@ -66,7 +66,8 @@ export default class Machine extends cc.Component {
     this.spinning = true;
     this.button.getChildByName('Label').getComponent(cc.Label).string = 'STOP';
 
-    for (let i = 0; i < this.numberOfReels; i += 1) {
+    for (let i = 0; i < this.numberOfReels; i += 1) 
+    {
       const theReel = this.reels[i].getComponent('Reel');
 
       if (i % 2) {
@@ -79,7 +80,8 @@ export default class Machine extends cc.Component {
     }
   }
 
-  lock(): void {
+  lock(): void 
+  {
     this.button.getComponent(cc.Button).interactable = false;
   }
 
@@ -91,7 +93,8 @@ export default class Machine extends cc.Component {
     }, 2500);
 
     const rngMod = Math.random() / 2;
-    for (let i = 0; i < this.numberOfReels; i += 1) {
+    for (let i = 0; i < this.numberOfReels; i += 1) 
+    {
       const spinDelay = i < 2 + rngMod ? i / 4 : rngMod * (i - 2) + i / 4;
       const theReel = this.reels[i].getComponent('Reel');
 

@@ -17,7 +17,8 @@ export default class GameManager extends cc.Component {
   }
 
   update(): void {
-    if (this.block && this.result != null) {
+    if (this.block && this.result != null) 
+    {
       this.informStop();
       this.result = null;
     }
@@ -26,11 +27,14 @@ export default class GameManager extends cc.Component {
   click(): void {
     cc.audioEngine.playEffect(this.audioClick, false);
 
-    if (this.machine.getComponent('Machine').spinning === false) {
+    if (this.machine.getComponent('Machine').spinning === false) 
+    {
       this.block = false;
       this.machine.getComponent('Machine').spin();
       this.requestResult();
-    } else if (!this.block) {
+    } 
+    else if (!this.block) 
+    {
       this.block = true;
       this.machine.getComponent('Machine').lock();
     }
@@ -41,16 +45,23 @@ export default class GameManager extends cc.Component {
     this.result = await this.getAnswer();
   }
 
-  getAnswer(): Promise<Array<Array<number>>> {
-    const slotResult = [];
-    return new Promise<Array<Array<number>>>(resolve => {
-      setTimeout(() => {
-        resolve(slotResult);
-      }, 1000 + 500 * Math.random());
-    });
+  getAnswer(): Promise<Array<Array<number>>> 
+  {
+
+    const slotResult = [[0,1,2],[5,6,7],[10,11,12],[15,16,17],[20,21,22]];
+  
+    return new Promise<Array<Array<number>>>(resolve => 
+      {
+      setTimeout(() => { resolve(slotResult); 
+      }, 
+      1000 + 500 * Math.random());
+    }
+    );
+
   }
 
   informStop(): void {
+  
     const resultRelayed = this.result;
     this.machine.getComponent('Machine').stop(resultRelayed);
   }

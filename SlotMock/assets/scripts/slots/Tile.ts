@@ -29,7 +29,15 @@ export default class Tile extends cc.Component {
   }
 
   setRandom(): void {
+    //random number beeing generated
     const randomIndex = Math.floor(Math.random() * this.textures.length);
     this.setTile(randomIndex);
   }
+
+
+
+
+
+
+
 }
