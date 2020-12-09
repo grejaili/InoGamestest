@@ -103,4 +103,41 @@ export default class Machine extends cc.Component {
       }, spinDelay * 1000);
     }
   }
+
+  SaveWinCondition(condition: number, winLines: cc.Vec2):void
+  {
+    
+    switch(condition) {
+      case 1:      
+        for (let i = 0; i < this.numberOfReels; i += 1) 
+        {          
+          this.reels[i].getComponent('Reel').SetWinTiles(winLines[0]);
+        }
+      break;
+      case 2:
+        for (let i = 0; i < this.numberOfReels; i += 1) 
+        {          
+          this.reels[i].getComponent('Reel').SetWinTiles(winLines[0]);
+          this.reels[i].getComponent('Reel').SetWinTiles(winLines[1]);
+          
+        }
+        break;
+      case 3:
+        for (let i = 0; i < this.numberOfReels; i += 1) 
+        {          
+          this.reels[i].getComponent('Reel').SetWinTiles(0);
+          this.reels[i].getComponent('Reel').SetWinTiles(1);
+          this.reels[i].getComponent('Reel').SetWinTiles(2);
+        }
+        break;
+      default:
+        // code block
+    }
+
+
+
+
+
+  }
+
 }

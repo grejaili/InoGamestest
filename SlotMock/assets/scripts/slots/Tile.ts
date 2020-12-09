@@ -4,6 +4,9 @@ const { ccclass, property } = cc._decorator;
 export default class Tile extends cc.Component {
   @property({ type: [cc.SpriteFrame], visible: true })
   private textures = [];
+  @property
+  winnerTile:boolean = false;
+
 
   async onLoad(): Promise<void> {
     await this.loadTextures();
@@ -24,16 +27,27 @@ export default class Tile extends cc.Component {
     });
   }
 
-  setTile(index: number): void {
+  setTile(index: number, winner:boolean): void {
     this.node.getComponent(cc.Sprite).spriteFrame = this.textures[index];
   }
 
   setRandom(): void {
     //random number beeing generated
     const randomIndex = Math.floor(Math.random() * this.textures.length);
-    this.setTile(randomIndex);
+    this.setTile(randomIndex,false);
   }
 
+
+  setWinner(win: boolean): void{
+    this.winnerTile = win;
+  } 
+
+
+  TriggerWinEffect(): void
+  {
+    console.log("Run Effect here");
+   //trigger Win effect
+  } 
 
 
 

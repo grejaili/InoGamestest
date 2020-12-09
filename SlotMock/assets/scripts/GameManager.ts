@@ -63,6 +63,7 @@ numberOfTexures: number =0;
   getAnswer(): Promise<Array<Array<number>>> 
   {
 
+    //if time allows
     //replace random for  //https://css-tricks.com/choose-an-random-option-based-on-a-range/
     let rand = Math.floor(Math.random() * 100); 
     let slotResult = this.FillMatrix(rand);
@@ -125,8 +126,10 @@ public RandomizeWinner()
     else if( porc >50 && porc < 83)
     {
 
-
+     
+  
       let randLine =  Math.floor(Math.random() * 2);
+
 
       for (let i = 0 ;i <numberOfReel;i++)
       {
@@ -144,15 +147,17 @@ public RandomizeWinner()
             }            
               
           }
+      }
+      this.machine.getComponent('Machine').SaveWinCondition(1,new cc.Vec2(randLine,0));
+      
 
-      }  
     }
     else if(porc > 83 && porc < 93)
     {
 
 
       let randLine =  Math.floor(Math.random() * 2);
- 
+      let WinLines = [];
       for (let i = 0 ;i <numberOfReel;i++)
       {
 
@@ -165,17 +170,19 @@ public RandomizeWinner()
             else
             {
               rand = Math.floor(Math.random() * 29);
-              matrix[i].push(rand);   
+              matrix[i].push(rand);
+              WinLines.push(j);   
             }            
               
           }
-
       }  
+      this.machine.getComponent('Machine').SaveWinCondition(2,new cc.Vec2(WinLines[0],WinLines[1]));
+
     }
     else
     {
       console.log("  93 maior ");
-       rand = Math.floor(Math.random() * 29);
+      rand = Math.floor(Math.random() * 29);
       for (let i = 0 ;i <numberOfReel;i++)
       {                
         for(let j = 0; j < numberLines ;j++)
@@ -183,10 +190,12 @@ public RandomizeWinner()
            matrix[i].push(randWin); 
           }
       }  
+
+      this.machine.getComponent('Machine').SaveWinCondition(3,new cc.Vec2(0,0));
     }
 
 
-   console.log(matrix);
+
    return matrix;
   
   }

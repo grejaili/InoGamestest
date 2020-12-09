@@ -51,11 +51,27 @@ export default class Reel extends cc.Component {
     }
   }
 
+
+  SetWinTiles(tileLine: number):void
+  {
+    for (let i = 0; i < 5; i += 1) 
+    {          
+     this.tiles[i].getComponent('Tile').setWinner(true);
+    }
+ 
+  }
+
   readyStop(newResult: Array<number>): void {
     const check = this.spinDirection === Aux.Direction.Down || newResult == null;
     this.result = check ? newResult : newResult.reverse();
     this.stopSpinning = true;
   }
+
+  effectCallback(element: cc.Node = null): void {
+    const el = element;
+    el.getComponent('Tile').TriggerWinEffect();
+  }
+
 
   changeCallback(element: cc.Node = null): void {
     const el = element;
@@ -124,13 +140,14 @@ export default class Reel extends cc.Component {
     const move = cc.tween(element).by(0.04, { position: cc.v2(0, 144 * dirModifier) });
     const doChange = cc.tween().call(() => this.changeCallback(element));
     const end = cc.tween().by(0.2, { position: cc.v2(0, 144 * dirModifier) }, { easing: 'bounceOut' });
-
+    const winEffect =cc.tween().call(() => this.effectCallback(element));
     move
       .then(doChange)
       .then(move)
       .then(doChange)
       .then(end)
       .then(doChange)
+      .then(winEffect)
       .start();
   }
 }
