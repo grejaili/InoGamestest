@@ -75,9 +75,6 @@
     "_components": [
       {
         "__id__": 3
-      },
-      {
-        "__id__": 165
       }
     ],
     "_prefab": null,
@@ -139,6 +136,7 @@
     "machine": {
       "__id__": 4
     },
+    "rngController": null,
     "audioClick": {
       "__uuid__": "1e510565-b4bd-4a60-abbb-40cf59de10d5"
     },
@@ -7759,15 +7757,5 @@
     "_originalWidth": 604,
     "_originalHeight": 424,
     "_id": "ea0nk6e3VJzqM0JgkNgjR5"
-  },
-  {
-    "__type__": "169f5XTAMlF8o6BlVcklNzG",
-    "_name": "",
-    "_objFlags": 0,
-    "node": {
-      "__id__": 2
-    },
-    "_enabled": true,
-    "_id": "4938g4Hx1DwpESwbcQdZVk"
   }
 ]

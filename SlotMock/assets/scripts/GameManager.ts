@@ -1,9 +1,15 @@
+import RngController from '../scripts/RngController';
+import generateAnswer from '../scripts/RngController';
+import Machine from './slots/Machine';
+
+
 const { ccclass, property } = cc._decorator;
 
 @ccclass
 export default class GameManager extends cc.Component {
   @property(cc.Node)
   machine = null;
+
 
   @property({ type: cc.AudioClip })
   audioClick = null;
@@ -12,8 +18,16 @@ export default class GameManager extends cc.Component {
 
   private result = null;
 
-  start(): void {
+
+  @property
+numberOfTexures: number =0;
+
+
+  start(): void 
+  {
     this.machine.getComponent('Machine').createMachine();
+    
+
   }
 
   update(): void {
@@ -40,7 +54,8 @@ export default class GameManager extends cc.Component {
     }
   }
 
-  async requestResult(): Promise<void> {
+  async requestResult(): Promise<void> 
+  {
     this.result = null;
     this.result = await this.getAnswer();
   }
@@ -48,11 +63,14 @@ export default class GameManager extends cc.Component {
   getAnswer(): Promise<Array<Array<number>>> 
   {
 
-    const slotResult = [[0,1,2],[5,6,7],[10,11,12],[15,16,17],[20,21,22]];
-  
+    //replace random for  //https://css-tricks.com/choose-an-random-option-based-on-a-range/
+    let rand = Math.floor(Math.random() * 100); 
+    let slotResult = this.FillMatrix(rand);
+
     return new Promise<Array<Array<number>>>(resolve => 
       {
-      setTimeout(() => { resolve(slotResult); 
+      setTimeout(() => {
+         resolve(slotResult); 
       }, 
       1000 + 500 * Math.random());
     }
@@ -65,4 +83,112 @@ export default class GameManager extends cc.Component {
     const resultRelayed = this.result;
     this.machine.getComponent('Machine').stop(resultRelayed);
   }
+
+  
+public RandomizeWinner()
+{
+
+  return  Math.floor(Math.random() * 29);;
+}
+
+
+  public FillMatrix(porc: number)
+  {
+   let numberOfReel = 5;
+   let numberLines = 3;
+   let matrix = [];
+    let linha = [];
+
+    let rand ;
+    let randWin = this.RandomizeWinner();
+
+
+    for (let i = 0 ;i <numberOfReel;i++)
+    {
+      matrix.push([]);
+    }
+    
+    if(porc <50) 
+    {
+     
+      for (let i = 0 ;i <numberOfReel;i++)
+      {
+
+        for(let j = 0; j < numberLines ;j++)
+          {       
+           rand = Math.floor(Math.random() * 29);
+           matrix[i].push(rand); 
+          }
+
+      }      
+    }  
+    else if( porc >50 && porc < 83)
+    {
+
+
+      let randLine =  Math.floor(Math.random() * 2);
+
+      for (let i = 0 ;i <numberOfReel;i++)
+      {
+
+        for(let j = 0; j < numberLines ;j++)
+          {   
+            if(randLine == j)
+            {
+              matrix[i].push(randWin);  
+            }   
+            else
+            {
+              rand = Math.floor(Math.random() * 29);
+              matrix[i].push(rand);   
+            }            
+              
+          }
+
+      }  
+    }
+    else if(porc > 83 && porc < 93)
+    {
+
+
+      let randLine =  Math.floor(Math.random() * 2);
+ 
+      for (let i = 0 ;i <numberOfReel;i++)
+      {
+
+        for(let j = 0; j < numberLines ;j++)
+          {       
+            if(randLine != j)
+            {
+              matrix[i].push(randWin);  
+            }   
+            else
+            {
+              rand = Math.floor(Math.random() * 29);
+              matrix[i].push(rand);   
+            }            
+              
+          }
+
+      }  
+    }
+    else
+    {
+      console.log("  93 maior ");
+       rand = Math.floor(Math.random() * 29);
+      for (let i = 0 ;i <numberOfReel;i++)
+      {                
+        for(let j = 0; j < numberLines ;j++)
+          {       
+           matrix[i].push(randWin); 
+          }
+      }  
+    }
+
+
+   console.log(matrix);
+   return matrix;
+  
+  }
+  
 }
